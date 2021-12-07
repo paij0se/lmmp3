@@ -1,4 +1,4 @@
-module github.com/paij0se/echedwnmp3
+module github.com/paij0se/lmmp3
 
 go 1.17
 
