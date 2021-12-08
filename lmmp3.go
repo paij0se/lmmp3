@@ -70,7 +70,7 @@ func DownloadAndConvert(url string) {
 
 		}
 	case "windows":
-		cmd := exec.Command("cmd", "/c", "ffmpeg -i", fileVideo, mp3file)
+		cmd := exec.Command("cmd", "/C", "ffmpeg -i", fileVideo, mp3file)
 		if cmd.Run() != nil {
 			fmt.Println(err)
 
@@ -85,7 +85,7 @@ func DownloadAndConvert(url string) {
 			fmt.Println(del)
 		}
 	case "windows":
-		del := exec.Command("cmd", "/c", "del *.mpeg").Run()
+		del := exec.Command("cmd", "/C", "del *.mpeg").Run()
 		if del != nil {
 			fmt.Println(del)
 		}
