@@ -14,7 +14,7 @@ package main
 import (
 	"os/exec"
 
-	lmmp3 "github.com/paij0se/lmmp3/src"
+	lmmp3 "github.com/paij0se/lmmp3"
 )
 
 func main() {
@@ -38,7 +38,7 @@ example linux and mac
 package main
 
 import (
-	lmmp3 "github.com/paij0se/lmmp3/src"
+	lmmp3 "github.com/paij0se/lmmp3"
 )
 
 func main() {
