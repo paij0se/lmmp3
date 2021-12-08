@@ -1,7 +1,6 @@
 package lmmp3
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -14,9 +13,7 @@ import (
 
 var (
 	ytregex = regexp.MustCompile(`(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?`)
-	stdout  bytes.Buffer
-	stderr  bytes.Buffer
-	version = "0.0.1"
+	Version = "0.0.2"
 )
 
 func searchffmpeg() {
@@ -25,10 +22,6 @@ func searchffmpeg() {
 		fmt.Println("ffmpeg not found", path)
 	}
 }
-func Version() {
-	fmt.Println(version)
-}
-
 func DownloadAndConvert(url string) {
 	searchffmpeg()
 	if !ytregex.MatchString(url) {
@@ -59,36 +52,29 @@ func DownloadAndConvert(url string) {
 	if err != nil {
 		panic(err)
 	}
-	// convert the file to mp3
 	switch runtime.GOOS {
 	case "linux", "darwin":
 		cmd := exec.Command("ffmpeg", "-i", fileVideo, mp3file)
-		cmd.Stdout = &stdout
-		cmd.Stderr = &stderr
 		if cmd.Run() != nil {
 			fmt.Println(err)
-
 		}
 	case "windows":
-		cmd := exec.Command("cmd", "/C", "ffmpeg -i", fileVideo, mp3file)
+		cmd := exec.Command("ffmpeg", "-i", fileVideo, mp3file)
 		if cmd.Run() != nil {
 			fmt.Println(err)
-
 		}
 	default:
 		fmt.Println("Unknown OS")
 	}
 	switch runtime.GOOS {
 	case "linux", "darwin":
-		del := exec.Command("sh", "-c", "rm *.mpeg").Run()
+		del := exec.Command("sh", "-c", "rm", "*.mpeg").Run()
 		if del != nil {
 			fmt.Println(del)
 		}
 	case "windows":
-		del := exec.Command("cmd", "/C", "del *.mpeg").Run()
-		if del != nil {
-			fmt.Println(del)
-		}
+		del := exec.Command("cmd", "/C", "del", "*.mpeg")
+		del.Run()
 	default:
 		fmt.Println("Unknown OS")
 	}
