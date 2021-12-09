@@ -13,7 +13,7 @@ import (
 
 var (
 	ytregex = regexp.MustCompile(`(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?`)
-	Version = "0.0.2"
+	Version = "0.0.3"
 )
 
 func searchffmpeg() {
@@ -68,7 +68,7 @@ func DownloadAndConvert(url string) {
 	}
 	switch runtime.GOOS {
 	case "linux", "darwin":
-		del := exec.Command("sh", "-c", "rm", "*.mpeg").Run()
+		del := exec.Command("sh", "-c", "rm *.mpeg").Run()
 		if del != nil {
 			fmt.Println(del)
 		}
