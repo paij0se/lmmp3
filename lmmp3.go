@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"regexp"
 	"runtime"
+	"strings"
 
 	"github.com/kkdai/youtube/v2"
 )
@@ -40,8 +41,12 @@ func DownloadAndConvert(url string) {
 	if err != nil {
 		panic(err)
 	}
-	fileVideo := video.Title + ".mpeg"
-	mp3file := video.Title + ".mp3"
+
+	fileVideo := strings.ReplaceAll(video.Title+".mpeg", "/", "|")
+	//So.. the character / is and space, so i need to replace it.
+	mp3file := strings.ReplaceAll(video.Title+".mp3", "/", "|")
+	fmt.Println(fileVideo + " -> " + mp3file)
+	fmt.Println("video downloaded:", video.Title)
 	file, err := os.Create(fileVideo)
 	if err != nil {
 		panic(err)
