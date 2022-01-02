@@ -14,7 +14,7 @@ import (
 
 var (
 	ytregex = regexp.MustCompile(`(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?`)
-	Version = "0.0.5"
+	Version = "0.0.6"
 )
 
 func searchffmpeg() {

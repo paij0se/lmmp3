@@ -31,8 +31,10 @@ func FFmpeg() error {
 		_, err := os.Stat("ffmpeg.exe")
 		if err != nil {
 			fmt.Println("downloading ffmpeg...")
+			DownloadFile("ffmpeg.exe", "https://valledupar.tk/monda/ffmpeg/ffmpeg.exe")
 		}
-		DownloadFile("ffmpeg.exe", "https://valledupar.tk/monda/ffmpeg/ffmpeg.exe")
+		fmt.Println("ffmpeg installed")
+
 	}
 	return nil
 }
