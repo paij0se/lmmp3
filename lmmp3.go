@@ -14,7 +14,7 @@ import (
 
 var (
 	ytregex = regexp.MustCompile(`(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?`)
-	Version = "0.0.6"
+	Version = "0.0.7"
 )
 
 func searchffmpeg() {
@@ -23,9 +23,10 @@ func searchffmpeg() {
 		fmt.Println("ffmpeg not found", path)
 	}
 }
+
+// This function is going to download and convert the video to a mp3 file
 func DownloadAndConvert(url string) {
 	searchffmpeg()
-	FFmpeg()
 	if !ytregex.MatchString(url) {
 		fmt.Println("not a youtube url")
 	}

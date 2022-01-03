@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"runtime"
 )
 
@@ -24,17 +25,14 @@ func DownloadFile(filepath string, url string) error {
 }
 
 // This func is going to download ffmpeg if is not installed (only in windows)
-func FFmpeg() error {
+func DownloadFFmpeg() error {
 	// https://valledupar.tk/monda/ffmpeg/ffmpeg.exe
 	if runtime.GOOS == "windows" {
-		// check if ffmpeg is installed
-		_, err := os.Stat("ffmpeg.exe")
+		_, err := exec.LookPath("ffmpeg.exe")
 		if err != nil {
-			fmt.Println("downloading ffmpeg...")
+			fmt.Println("Downloading ffmpeg")
 			DownloadFile("ffmpeg.exe", "https://valledupar.tk/monda/ffmpeg/ffmpeg.exe")
 		}
-		fmt.Println("ffmpeg installed")
-
 	}
 	return nil
 }
