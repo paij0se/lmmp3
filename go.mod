@@ -2,7 +2,7 @@ module github.com/paij0se/lmmp3
 
 go 1.17
 
-require github.com/kkdai/youtube/v2 v2.7.7
+require github.com/kkdai/youtube/v2 v2.7.8
 
 require (
 	github.com/bitly/go-simplejson v0.5.0 // indirect
