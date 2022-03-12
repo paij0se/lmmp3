@@ -7,21 +7,23 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/schollz/progressbar/v3"
 )
 
 func DownloadFile(filepath string, url string) error {
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	out, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-	_, err = io.Copy(out, resp.Body)
-	return err
+	req, _ := http.NewRequest("GET", url, nil)
+	resp, _ := http.DefaultClient.Do(req)
+	f, _ := os.OpenFile("ffmpeg.exe", os.O_CREATE|os.O_WRONLY, 0644)
+	defer f.Close()
+
+	bar := progressbar.DefaultBytes(
+		resp.ContentLength,
+		"downloading ffmpeg",
+	)
+	io.Copy(io.MultiWriter(f, bar), resp.Body)
+	return nil
+
 }
 
 // This func is going to download ffmpeg if is not installed (only in windows)
