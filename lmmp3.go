@@ -3,6 +3,7 @@ package lmmp3
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/exec"
 	"regexp"
@@ -14,7 +15,7 @@ import (
 
 var (
 	ytregex = regexp.MustCompile(`(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?`)
-	Version = "1.0.0"
+	Version = "1.0.2"
 )
 
 func searchffmpeg() {
@@ -24,7 +25,8 @@ func searchffmpeg() {
 	}
 }
 
-// This function is going to download and convert the video to a mp3 file
+// This function is going to download and convert the video to a mp3 file.
+// video.mpeg -> video.mp3; delete the *.mpeg file.
 func DownloadAndConvert(url string) {
 	searchffmpeg()
 	if !ytregex.MatchString(url) {
@@ -35,13 +37,13 @@ func DownloadAndConvert(url string) {
 
 	video, err := client.GetVideo(videoID)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	formats := video.Formats.WithAudioChannels()
 	stream, _, err := client.GetStream(video, &formats[2])
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	fileVideo := strings.ReplaceAll(video.Title+".mpeg", "/", "|")
@@ -51,13 +53,13 @@ func DownloadAndConvert(url string) {
 	fmt.Println("video downloaded:", video.Title)
 	file, err := os.Create(fileVideo)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	defer file.Close()
 
 	_, err = io.Copy(file, stream)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	switch runtime.GOOS {
 	case "linux", "darwin":

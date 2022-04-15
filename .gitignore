@@ -2,3 +2,5 @@ go.sum
 *.mp3
 *.mpeg
 *.exe
+*.gif
+.spotdl-cache
